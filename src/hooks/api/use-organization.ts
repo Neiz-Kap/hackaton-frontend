@@ -1,6 +1,26 @@
 import { organizationAPI } from '@/lib/api/organization.api'
 import { QUERY_KEYS } from '@/lib/constants'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Organization } from '@/lib/types'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { toast } from '../use-toast'
+
+export const useQueryOrganizations = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.ORGANIZATION],
+    // staleTime: Infinity,
+    queryFn: organizationAPI.getAll,
+    throwOnError: (error) => {
+      if (error instanceof Error) toast({ title: `Failed to get organizations: ${error}` })
+      return false
+    },
+  })
+}
+
+export const useOrganizationsCache = () => {
+  const queryClient = useQueryClient()
+
+  return queryClient.getQueryData<Organization[]>([QUERY_KEYS.ORGANIZATION]) || []
+}
 
 // export const useCreateOrganization = () => {
 //   const queryClient = useQueryClient()

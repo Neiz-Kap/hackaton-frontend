@@ -1,6 +1,7 @@
 // Step2.tsx
 import { Button } from '@/components/ui/button'
 import { Form, FormLabel } from '@/components/ui/form'
+import { useQueryOrganizations } from '@/hooks/api/use-organization'
 import { useForm } from 'react-hook-form'
 
 type Step2Inputs = {
@@ -12,6 +13,10 @@ type Step2Props = {
 }
 
 export function Step2({ onSubmit }: Step2Props) {
+  const { data: organizations, isLoading } = useQueryOrganizations()
+
+  console.debug()
+
   const form = useForm<Step2Inputs>({
     defaultValues: { createOrg: true },
   })
@@ -34,7 +39,7 @@ export function Step2({ onSubmit }: Step2Props) {
           <Button type="button" onClick={onSubmitCreateOrg}>
             Создать новую организацию
           </Button>
-          <Button type="button" onClick={onSubmitJoinOrg}>
+          <Button type="button" onClick={onSubmitJoinOrg} disabled={organizations === undefined}>
             Присоединиться к существующей
           </Button>
         </div>

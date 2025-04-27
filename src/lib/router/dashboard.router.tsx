@@ -107,6 +107,13 @@ export const dashboardMenu: SidebarConfig[] = [
         isDirector: true,
       },
       {
+        title: 'Рейтинг клиентов',
+        href: AppRoutes.DASHBOARD_EMPLOYEE,
+        icon: 'Users',
+        isPublic: false,
+        isDirector: true,
+      },
+      {
         title: 'Сессии сотрудников',
         href: AppRoutes.DASHBOARD_EMPLOYEE_SESSION,
         icon: 'ScrollText',

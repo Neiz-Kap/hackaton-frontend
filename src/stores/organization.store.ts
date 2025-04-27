@@ -11,7 +11,7 @@ export interface ProfileSlice {
 
 export const useOrganizationStore = create<ProfileSlice>()(
   immer((set, get) => ({
-    organization: { id: 1, name: 'orgtest', email: 'email@mail.ru', owner_id: 5 },
+    organization: { id: 1, name: 'ODS Хантатон', email: 'email@mail.ru', owner_id: 5 },
     // organization: null,
     isLoading: false,
     error: null,

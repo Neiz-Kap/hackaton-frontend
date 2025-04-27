@@ -1,6 +1,7 @@
 import { toast } from '@/hooks/use-toast'
 import { getStressLevelMessage } from '@/pages/auth/TestPlayground'
 import { useState } from 'react'
+import { Card } from '../ui/card'
 import { AskCard } from './ask-card'
 import { AskCardPreview } from './ask-card-preview'
 
@@ -57,17 +58,6 @@ export default function CardSurvey() {
   const [responses, setResponses] = useState<number[]>([]) // Массив выбранных значений
 
   const totalSteps = surveySteps.length
-
-  const stressLevel = 0.5
-  toast({
-    title: 'По результату опроса, ваш уровень стресса:',
-    description: (
-      <div className="flex items-center">
-        {getStressLevelMessage(stressLevel).icon}
-        <span className="ml-2">{getStressLevelMessage(stressLevel).message}</span>
-      </div>
-    ),
-  })
 
   // Fill the responses array with zeros
   const fillWithZeros = (length: number): number[] => {
@@ -144,7 +134,6 @@ export default function CardSurvey() {
           title: 'По результату опроса, ваш уровень стресса:',
           description: (
             <div className="flex items-center">
-              <div className="mr-2">:</div>
               {getStressLevelMessage(stressLevel).icon}
               <span className="ml-2">{getStressLevelMessage(stressLevel).message}</span>
             </div>
@@ -165,8 +154,7 @@ export default function CardSurvey() {
 
   return (
     isSurveyVisible && (
-      <div className="flex flex-row justify-center items-center">
-        {/* Render AskCardPreview or AskCard based on currentStep */}
+      <Card className="w-full">
         {currentStep === 0 ? (
           <AskCardPreview onStart={handleNextStep} />
         ) : currentStep <= totalSteps ? (
@@ -186,7 +174,7 @@ export default function CardSurvey() {
             }
           />
         ) : null}
-      </div>
+      </Card>
     )
   )
 }

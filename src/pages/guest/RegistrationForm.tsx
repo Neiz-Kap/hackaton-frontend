@@ -14,7 +14,7 @@ import { Step3 } from './RegistrationStep3'
 import { Step4 } from './RegistrationStep4'
 
 export function Component() {
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(2)
   const [error, setError] = useState<string | null>(null)
 
   const navigate = useNavigate()
@@ -28,7 +28,6 @@ export function Component() {
     try {
       const employeeResponse = await employeeAPI.signUp(data)
       console.debug(employeeResponse)
-      debugger
       setAccessToken(employeeResponse.access_token)
       console.debug(accessToken)
 

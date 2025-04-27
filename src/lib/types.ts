@@ -37,11 +37,12 @@ export type Organization = {
   id: number
   name: string
   email: string
-  owner_id: number
+  user_id: number
 }
 
 export type TCreateOrganization = {
-  owner_id: number
+  id: number
+  user_id: number
   name: string
   email: string
 }

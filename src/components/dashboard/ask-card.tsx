@@ -24,7 +24,7 @@ export function AskCard({
 
   return (
     //  className="w-96 h-100% m-8 rounded-md border border-gray-900 items-center"
-    <Card className="w-full">
+    <>
       <CardHeader className="flex-col">
         <div className="flex justify-center flex-col gap-4">
           <CardTitle className="flex flex-row justify-center">{question}</CardTitle>
@@ -56,6 +56,6 @@ export function AskCard({
           </Button>
         )}
       </CardFooter>
-    </Card>
+    </>
   )
 }
