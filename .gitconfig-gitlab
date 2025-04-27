@@ -1,0 +1,1 @@
+[includeIf "hasconfig:remote.*.url:https://gitlab.com/**"]

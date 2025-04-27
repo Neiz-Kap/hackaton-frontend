@@ -1,9 +1,0 @@
-import { envConfig } from '@/config/env.config'
-
-export const API_BASE_URL = `${envConfig.apiBaseUrl}/api`
-
-export const QUERY_KEYS = {
-  EMPLOYEE: 'employee',
-  ORGANIZATION: 'organization',
-  // PERMISSION: 'permission',
-}
