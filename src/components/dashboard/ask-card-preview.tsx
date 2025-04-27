@@ -13,8 +13,8 @@ export function AskCardPreview({ onStart }: { onStart: () => void }) {
           />
         </div>
         <div className="flex justify-center flex-col gap-2">
-          <CardTitle className='text-center'>У вас был тяжёлый звонок ?</CardTitle>
-          <CardDescription className='text-center'>Давайте пройдём небольшой опрос.</CardDescription>
+          <CardTitle className="text-center">У вас был тяжёлый звонок?</CardTitle>
+          <CardDescription className="text-center">Давайте пройдём небольшой опрос.</CardDescription>
         </div>
       </CardHeader>
       <CardFooter>

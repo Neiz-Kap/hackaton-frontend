@@ -5,6 +5,7 @@ export enum AppRoutes {
   DASHBOARD_PLAYGROUND = '/dashboard/test-playground',
   DASHBOARD_SESSION = '/dashboard/session',
   DASHBOARD_EMPLOYEE_SESSION = '/dashboard/employees-session',
+  DASHBOARD_CABINET = '/dashboard/cabinet',
   DASHBOARD_EMPLOYEE = '/dashboard/employees',
   DASHBOARD_EMPLOYEE_STRESS = '/dashboard/employees-stress',
   NOT_FOUND = 'not_found',

@@ -1,3 +1,5 @@
+import { env } from 'process'
+import { envConfig } from '@/config/env.config'
 import { toast } from '@/hooks/use-toast'
 import { getStressLevelMessage } from '@/pages/auth/TestPlayground'
 import { useState } from 'react'
@@ -52,10 +54,14 @@ const surveySteps = [
   },
 ]
 
-export default function CardSurvey() {
-  const [currentStep, setCurrentStep] = useState(0) // Текущий шаг
+interface CardSurveyProps {
+  onSurveyComplete: () => void // Callback to notify parent when survey is completed
+}
+
+export default function CardSurvey({ onSurveyComplete }: CardSurveyProps) {
   const [isSurveyVisible, setIsSurveyVisible] = useState(true) // Видимость опроса
-  const [responses, setResponses] = useState<number[]>([]) // Массив выбранных значений
+  const [currentStep, setCurrentStep] = useState(0)
+  const [responses, setResponses] = useState<number[]>([])
 
   const totalSteps = surveySteps.length
 
@@ -109,7 +115,7 @@ export default function CardSurvey() {
     console.log('Общий уровень стресса:', stressLevel)
 
     // Send the sanitized data to the backend
-    fetch('https://hackathon-backend-szk8.onrender.com/result/', {
+    fetch(`${envConfig.apiBaseUrl}/result/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -123,7 +129,6 @@ export default function CardSurvey() {
     })
       .then((response) => {
         if (!response.ok) {
-          // Handle non-2xx HTTP status codes
           throw new Error(`HTTP error! Status: ${response.status}`)
         }
         return response.json()
@@ -139,42 +144,36 @@ export default function CardSurvey() {
             </div>
           ),
         })
+
+        // Notify parent that the survey is completed
+        onSurveyComplete()
       })
       .catch((error) => {
-        if (error.message.includes('422')) {
-          console.error('Ошибка 422: Некорректные данные отправлены на сервер.')
-        } else {
-          console.error('Ошибка при отправке данных:', error)
-        }
+        console.error('Ошибка при отправке данных:', error)
       })
-
-    // Hide the survey after completion
-    setIsSurveyVisible(false)
   }
 
   return (
-    isSurveyVisible && (
-      <Card className="w-full">
-        {currentStep === 0 ? (
-          <AskCardPreview onStart={handleNextStep} />
-        ) : currentStep <= totalSteps ? (
-          <AskCard
-            question={surveySteps[currentStep - 1].question}
-            points={surveySteps[currentStep - 1].points}
-            onNext={handleNextStep}
-            onPrev={handlePrevStep}
-            onFinish={currentStep === totalSteps ? handleFinish : undefined}
-            selectedValue={responses[currentStep - 1] || 0}
-            setSelectedValue={(value: number) =>
-              setResponses((prev) => {
-                const newResponses = [...prev]
-                newResponses[currentStep - 1] = value
-                return newResponses
-              })
-            }
-          />
-        ) : null}
-      </Card>
-    )
+    <Card className="lg:col-span-1">
+      {currentStep === 0 ? (
+        <AskCardPreview onStart={handleNextStep} />
+      ) : currentStep <= totalSteps ? (
+        <AskCard
+          question={surveySteps[currentStep - 1].question}
+          points={surveySteps[currentStep - 1].points}
+          onNext={handleNextStep}
+          onPrev={handlePrevStep}
+          onFinish={currentStep === totalSteps ? handleFinish : undefined}
+          selectedValue={responses[currentStep - 1] || 0}
+          setSelectedValue={(value: number) =>
+            setResponses((prev) => {
+              const newResponses = [...prev]
+              newResponses[currentStep - 1] = value
+              return newResponses
+            })
+          }
+        />
+      ) : null}
+    </Card>
   )
 }

@@ -9,7 +9,7 @@ export interface ProfileSlice {
   setOrganization: (employee: Organization) => Promise<void>
 }
 
-export const useOrganizationStore = create<ProfileSlice>()(
+export const useSessionStore = create<ProfileSlice>()(
   immer((set, get) => ({
     organization: { id: 1, name: 'ODS Хантатон', email: 'email@mail.ru', user_id: 5 },
     // organization: null,

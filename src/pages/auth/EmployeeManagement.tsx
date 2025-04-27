@@ -1,19 +1,12 @@
-import AudioChart from '@/components/dashboard/employee/audio-results'
-import TestChart from '@/components/dashboard/employee/test-results'
-import VideoChart from '@/components/dashboard/employee/video-results'
-import { EmployeeSessionTable } from '@/components/dashboard/EmployeeSessionTable'
 import { EmployeeTable } from '@/components/dashboard/EmployeeTable'
-import { useEmployeeStore } from '@/stores/employee'
+import { EcommerceSalesByLocationCard2 } from '@/components/dashboard/work-session/calls-by-location-2'
 
 export function Component() {
-  const { employee } = useEmployeeStore()
-
-  const employeeId = employee!.id
-
   return (
     <section className="space-y-4">
       <div className="mt-4 gap-4 space-y-4 xl:grid xl:grid-cols-2 xl:space-y-0">
         <EmployeeTable />
+        <EcommerceSalesByLocationCard2 />
       </div>
     </section>
   )

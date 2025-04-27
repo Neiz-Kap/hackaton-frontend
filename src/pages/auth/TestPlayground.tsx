@@ -25,19 +25,12 @@ const useVideoAnalysis = () => {
   return useMutation({
     mutationKey: ['videoAnalysis'],
     mutationFn: (url: string) => {
-      const timeoutId = setTimeout(() => {
-        controller.abort('Request timed out')
-      }, 60000) // 60 секунд
-
-      try {
-        return stressAPI.analyzeVideo(url, { signal: controller.signal })
-      } finally {
-        clearTimeout(timeoutId)
-      }
+      const signal = AbortSignal.timeout(50_000)
+      return stressAPI.analyzeVideo(url, { signal })
     },
     onError: (error) => {
       if (error.name === 'AbortError') {
-        console.error('Request took more than 5 seconds. Automatically cancelled.')
+        console.error('Request took more than 50 seconds. Automatically cancelled.')
         toast({ title: `Failed to analyse audio, abort: ${error}` })
         return
       }
@@ -54,19 +47,12 @@ const useAudioAnalysis = () => {
   return useMutation({
     mutationKey: ['audioAnalysis'],
     mutationFn: (url: string) => {
-      const timeoutId = setTimeout(() => {
-        controller.abort('Request timed out')
-      }, 60000) // 60 секунд
-
-      try {
-        return stressAPI.analyzeAudio(url, { signal: controller.signal })
-      } finally {
-        clearTimeout(timeoutId)
-      }
+      const signal = AbortSignal.timeout(50_000)
+      return stressAPI.analyzeAudio(url, { signal: signal })
     },
     onError: (error) => {
       if (error.name === 'AbortError') {
-        console.error('Request took more than 5 seconds. Automatically cancelled.')
+        console.error('Request took more than 50 seconds. Automatically cancelled.')
         toast({ title: `Failed to analyse audio, abort: ${error}` })
         return
       }
@@ -97,6 +83,8 @@ export function Component() {
   const handleProcess = () => {
     analyzeAudio(audioUrl)
     analyzeVideo(videoUrl)
+
+    setStressLevel(0.6)
   }
 
   // Вычисление среднего уровня стресса
@@ -111,7 +99,7 @@ export function Component() {
 
   return (
     <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Тестовая прошадка</h1>
+      <h1 className="text-2xl font-bold mb-4">Тестовая прошадка звонка</h1>
       <div className="mb-4">
         <label className="block text-sm font-medium mb-2">Ссылка на аудио файл</label>
         <Input type="text" value={audioUrl} onChange={(e) => setAudioUrl(e.target.value)} className="w-full" />

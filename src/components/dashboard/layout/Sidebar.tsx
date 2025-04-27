@@ -1,4 +1,3 @@
-// components/dashboard/layout/Sidebar.tsx
 'use client'
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
@@ -22,6 +21,7 @@ import { useOrganizationStore } from '@/stores/organization.store'
 import { ChevronsUpDown } from 'lucide-react'
 import { useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import Logo from './header/logo'
 
 export default function Sidebar() {
   const { organization } = useOrganizationStore()
@@ -52,9 +52,10 @@ export default function Sidebar() {
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger disabled asChild>
-                <SidebarMenuButton>
+                <SidebarMenuButton className='gap-1 p-1'>
+                  <Logo className="me-2 group-data-[collapsible=icon]:me-0" />
                   <div>
-                    <div className="truncate font-semibold text-s group-data-[collapsible=icon]:me-0">
+                    <div className="truncate font-semibold text-s group-data-[collapsible=icon]:hidden">
                       {organization?.name}
                     </div>
                   </div>

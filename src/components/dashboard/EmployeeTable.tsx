@@ -3,6 +3,7 @@ import { envConfig } from '@/config/env.config'
 import { employeeAPI } from '@/lib/api/employee.api'
 import { organizationAPI } from '@/lib/api/organization.api'
 import { Employee } from '@/lib/types'
+import { faker } from '@faker-js/faker'
 import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { ChevronDownIcon } from 'lucide-react'
@@ -11,15 +12,28 @@ import { Button } from '../ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { Input } from '../ui/input'
+import { Spinner } from '../ui/spinner'
+
+const getColor = (stressLevel: number) => {
+  if (stressLevel < 0.4) {
+    return 'text-green-500'
+  } else if (stressLevel < 0.7) {
+    return 'text-orange-400'
+  } else {
+    return 'text-red-400'
+  }
+}
 
 export const columns: ColumnDef<Employee>[] = [
   {
     accessorKey: 'name',
     header: 'Имя',
+    cell: ({ row }) => <div>{faker.person.firstName()}</div>,
   },
   {
     accessorKey: 'surname',
     header: 'Фамилия',
+    cell: ({ row }) => <div>{faker.person.lastName()}</div>,
   },
   {
     accessorKey: 'phone',
@@ -29,18 +43,27 @@ export const columns: ColumnDef<Employee>[] = [
   {
     accessorKey: 'role',
     header: 'Роль',
-    //   cell: ({ row }) => {
-    //     const startTime = new Date(row.getValue('start_time'))
-    //     return <div>{format(startTime, 'yyyy-MM-dd HH:mm:ss')}</div>
-    //   },
   },
   {
     accessorKey: 'email',
     header: 'Почта',
-    // cell: ({ row }) => {
-    //   const endTime = new Date(row.getValue('end_time'))
-    //   return <div>{format(endTime, 'yyyy-MM-dd HH:mm:ss')}</div>
-    // },
+    cell: ({ row }) => <div>{faker.internet.email()}</div>,
+  },
+  {
+    accessorKey: '',
+    header: 'Общ. уровень стресса',
+    cell: ({ row }) => {
+      const stsLvl = +Math.random().toFixed(2)
+      return <div className={getColor(stsLvl)}>{stsLvl}</div>
+    },
+  },
+  {
+    accessorKey: '',
+    header: 'Уровень стресса',
+    cell: ({ row }) => {
+      const stsLvl = +Math.random().toFixed(2)
+      return <div className={`${getColor(stsLvl)}`}>{stsLvl}</div>
+    },
   },
 ]
 
@@ -78,8 +101,7 @@ export function EmployeeTable() {
     <Card>
       <CardHeader className="flex flex-row justify-between">
         <CardTitle>Сотрудники</CardTitle>
-
-        {loading && <div>Loading...</div>}
+        {loading && <Spinner>Loading...</Spinner>}
       </CardHeader>
       <CardContent>
         <div className="mb-4 flex items-center gap-2">

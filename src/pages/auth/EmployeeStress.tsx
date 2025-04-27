@@ -10,10 +10,11 @@ export function Component() {
 
   return (
     <section className="space-y-4">
-      <AudioChart employeeId={employeeId} />
+      <TestChart employeeId={employeeId} />
 
       <div className="mt-4 gap-4 space-y-4 xl:grid xl:grid-cols-2 xl:space-y-0">
-        <TestChart employeeId={employeeId} />
+        <AudioChart employeeId={employeeId} />
+
         <VideoChart employeeId={employeeId} />
       </div>
     </section>

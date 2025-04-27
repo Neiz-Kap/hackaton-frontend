@@ -23,24 +23,18 @@ export function AskCard({
   const shouldHideSlider = points.length === 0
 
   return (
-    //  className="w-96 h-100% m-8 rounded-md border border-gray-900 items-center"
     <>
       <CardHeader className="flex-col">
         <div className="flex justify-center flex-col gap-4">
           <CardTitle className="flex flex-row justify-center">{question}</CardTitle>
           {!shouldHideSlider && (
-            <CardDescription className="flex gap-4 flex-col">
+            <CardDescription className="flex my-5 flex-col">
               <MarkedSlider value={selectedValue} onChange={setSelectedValue} points={points} />
             </CardDescription>
           )}
         </div>
       </CardHeader>
-      <CardContent>
-        <form>
-          <div className="grid w-50% items-center"></div>
-        </form>
-      </CardContent>
-      <CardFooter className="gap-4">
+      <CardContent className="gap-4 flex justify-between">
         {!onFinish && !shouldHideSlider && (
           <Button variant="outline" className="grow" onClick={onPrev}>
             Назад
@@ -55,7 +49,7 @@ export function AskCard({
             Далее
           </Button>
         )}
-      </CardFooter>
+      </CardContent>
     </>
   )
 }

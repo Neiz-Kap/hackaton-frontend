@@ -1,4 +1,5 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { faker } from '@faker-js/faker'
 import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { ChevronDownIcon } from 'lucide-react'
@@ -19,7 +20,9 @@ export type Session = {
 export const columns: ColumnDef<Session>[] = [
   {
     accessorKey: 'employee_id',
-    header: 'Employee ID',
+    header: 'Почта сотрудника',
+    cell: ({ row }) => <div>{faker.internet.email()}</div>,
+
   },
   {
     accessorKey: 'total_calls',
@@ -29,6 +32,7 @@ export const columns: ColumnDef<Session>[] = [
     accessorKey: 'status',
     header: 'Статус',
     cell: ({ row }) => <div>{row.getValue('status') ? 'Active' : 'Inactive'}</div>,
+
   },
   {
     accessorKey: 'start_time',
@@ -93,8 +97,8 @@ export function EmployeeSessionTable() {
         <div className="mb-4 flex items-center gap-2">
           <Input
             placeholder="Фильтр сессий..."
-            value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
-            onChange={(event) => table.getColumn('email')?.setFilterValue(event.target.value)}
+            value={(table.getColumn('employee_id')?.getFilterValue() as string) ?? ''}
+            onChange={(event) => table.getColumn('employee_id')?.setFilterValue(event.target.value)}
             className="max-w-sm"
           />
           <DropdownMenu>
@@ -159,7 +163,7 @@ export function EmployeeSessionTable() {
             {table.getFilteredSelectedRowModel().rows.length} из {table.getFilteredRowModel().rows.length} записей
             выведено
           </div>
-          {error && <div className='mx-auto text-red-600'>{error}</div>}
+          {error && <div className="mx-auto text-red-600">{error}</div>}
 
           <div className="space-x-2">
             <Button

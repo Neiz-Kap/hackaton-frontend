@@ -1,5 +1,5 @@
 import { DashboardLayout } from '@/components/dashboard/layout/DashboardLayout'
-import { WorkPage } from '@/components/dashboard/work-page'
+import { EmployeeSession } from '@/components/dashboard/EmployeeSession'
 import { Navigate, RouteObject } from 'react-router-dom'
 import { AppRoutes } from '../types'
 
@@ -63,6 +63,10 @@ export const dashboardRoutes: AppRouteObject[] = [
         lazy: () => import('@/pages/auth/TestPlayground'),
       },
       {
+        path: 'cabinet',
+        lazy: () => import('@/pages/auth/Profile'),
+      },
+      {
         path: 'employees',
         lazy: () => import('@/pages/auth/EmployeeManagement'),
       },
@@ -100,14 +104,13 @@ export const dashboardMenu: SidebarConfig[] = [
         isPublic: true,
       },
       {
-        title: 'Сотрудники',
-        href: AppRoutes.DASHBOARD_EMPLOYEE,
-        icon: 'Users',
-        isPublic: false,
-        isDirector: true,
+        title: 'Личный кабинет',
+        href: AppRoutes.DASHBOARD_CABINET,
+        icon: 'User',
+        isPublic: true,
       },
       {
-        title: 'Рейтинг клиентов',
+        title: 'Сотрудники',
         href: AppRoutes.DASHBOARD_EMPLOYEE,
         icon: 'Users',
         isPublic: false,

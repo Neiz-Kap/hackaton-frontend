@@ -27,6 +27,8 @@ const TestChart = ({ employeeId }: TestChartProps) => {
           date: `2025-01-${String(index + 1).padStart(2, '0')}`,
         }))
 
+        console.debug(chartData)
+
         setData(chartData)
       } catch (err: any) {
         setError(err.message || 'Ошибка при загрузке данных')
@@ -53,7 +55,7 @@ const TestChart = ({ employeeId }: TestChartProps) => {
             <YAxis domain={[0, 1]} />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="Уровень стресса" stroke="#8884d8" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="score" stroke="#8884d8" activeDot={{ r: 8 }} />
           </LineChart>
         </ResponsiveContainer>
       </CardContent>
